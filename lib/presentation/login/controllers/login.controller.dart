@@ -98,7 +98,7 @@ class LoginController extends GetxController {
     Get.snackbar(
       'Hi 👋',
       'Selamat Datang $username',
-      backgroundColor: Colors.lightGreen, // Atur warna sesuai keinginanmu
+      backgroundColor: Colors.lightBlue, // Atur warna sesuai keinginanmu
     );
     Get.offAll(HomeScreen(nama: username));
     // Tambahkan snackbar di sini
