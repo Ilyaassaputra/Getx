@@ -5,7 +5,7 @@ import 'infrastructure/navigation/routes.dart';
 
 void main() async {
   // Set the initial route to Routes.LOGIN
-  var initialRoute = Routes.LOGIN; // Directly setting the initial route to LOGIN
+  var initialRoute = await Routes.initialRoute;
   runApp(Main(initialRoute));
 }
 

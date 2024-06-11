@@ -4,10 +4,12 @@ class Routes {
   static Future<String> get initialRoute async {
     // Any async logic to determine the initial route can go here
     // For this example, we return LOGIN
-    return LOGIN;
+    return SANTRI;
   }
 
+  static const DATA_PENDAFTAR = '/data-pendaftar';
   static const HOME = '/home';
   static const LOGIN = '/login';
-  static const DATA_PENDAFTAR = '/data-pendaftar';
+  static const TAGIHAN = '/tagihan';
+  static const SANTRI = '/santri';
 }

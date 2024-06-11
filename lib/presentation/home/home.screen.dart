@@ -9,14 +9,13 @@ import 'controllers/home.controller.dart';
 class HomeScreen extends GetView<HomeController> {
   HomeScreen({required this.nama});
   final String nama;
-  // required nama
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Simouaka',
+          'Al Hunnain.',
           style: TextStyle(
             fontFamily: 'Peanut Butter',
             fontSize: 30,
@@ -26,121 +25,122 @@ class HomeScreen extends GetView<HomeController> {
           actionBar(),
         ],
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Hi, Selamat Datang 👋',
-                                  style: TextStyle(
-                                    fontFamily: 'roboto',
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                Text(
-                                  nama,
-                                  style: TextStyle(
-                                      fontFamily: 'roboto',
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: LayoutBuilder(
-                          builder: (context, constraints) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      buildCard(Icons.my_library_books_outlined,
-                                          "Momerandum Of Understanding", () {
-                                        // Get.to(() => MouScreen());
-                                      }),
-                                      buildCard(Icons.my_library_books,
-                                          "Momerandum Of \nAgreement", () {
-                                        // Get.to(() => MoaScreen());
-                                      }),
-                                    ],
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      buildCard(Icons.post_add,
-                                          "Input Kegiatan \nDokumen", () {
-                                        // Get.to(() => InputKegiatanScreen());
-                                      }),
-                                      buildCard(Icons.account_circle,
-                                          "Lihat Token", () {}),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Menu'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
               ),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: FractionallySizedBox(
-                widthFactor: 0.8,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Develop by IT, ',
-                        style: TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                      GestureDetector(
-                        child: Text(
-                          'AKN Putra Sang Fajar!',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.blue,
-                          ),
-                        ),
-                        onTap: () {},
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
+              onTap: () {
+                // Handle Profile
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {
+                Get.offAll(() => LoginScreen());
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.color_lens),
+              title: Text('Change Theme'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(Icons.panorama_fish_eye_sharp),
+              title: Text('Lihat Token'),
+              onTap: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                String? token = prefs.getString('token');
+                if (token != null) {
+                  Get.dialog(AlertDialog(
+                    title: Text('Token'),
+                    content: Text(token),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          Get.back();
+                        },
                       ),
                     ],
+                  ));
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Dashboard',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            Text('Welcome'),
+            SizedBox(height: 20),
+            Expanded(
+              child: ListView(
+                children: [
+                  buildDashboardCard(
+                    icon: Icons.person,
+                    title: 'Total Pendaftar',
+                    value: '1',
+                    color: Colors.blue,
                   ),
-                ),
+                  buildDashboardCard(
+                    icon: Icons.person_outline,
+                    title: 'Total Santri',
+                    value: '0',
+                    color: Colors.blue,
+                  ),
+                  buildDashboardCard(
+                    icon: Icons.bar_chart,
+                    title: 'Total',
+                    value: '\$1,345',
+                    color: Colors.green,
+                  ),
+                  buildDashboardCard(
+                    icon: Icons.check_circle,
+                    title: 'Total',
+                    value: '576',
+                    color: Colors.purple,
+                  ),
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildDashboardCard(
+      {required IconData icon,
+      required String title,
+      required String value,
+      required Color color}) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: color,
+          child: Icon(icon, color: Colors.white),
+        ),
+        title: Text(title),
+        trailing: Text(value,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
     );
   }
@@ -162,7 +162,7 @@ class actionBar extends StatelessWidget {
               leading: Icon(Icons.person),
               title: Text('Profile'),
               onTap: () {
-                // Tambahkan logika untuk menu Profile di sini
+                // Handle Profile
               },
             ),
           ),
@@ -178,7 +178,14 @@ class actionBar extends StatelessWidget {
           PopupMenuItem(
             child: ListTile(
               leading: Icon(Icons.color_lens),
-              title: Text('Change Theme'),
+              title: Text('ANCOK'),
+              onTap: () {},
+            ),
+          ),
+          PopupMenuItem(
+            child: ListTile(
+              leading: Icon(Icons.currency_bitcoin),
+              title: Text('Tagihan'),
               onTap: () {},
             ),
           ),
@@ -189,23 +196,19 @@ class actionBar extends StatelessWidget {
               onTap: () async {
                 SharedPreferences prefs = await SharedPreferences.getInstance();
                 String? token = prefs.getString('token');
-                // Lakukan logika sesuai dengan nilai token
                 if (token != null) {
                   Get.dialog(AlertDialog(
-                      title: Text('Token'),
-                      content: Text(token),
-                      actions: [
-                        TextButton(
-                          child: Text('OK'),
-                          onPressed: () {
-                            Get.back();
-                          },
-                        ),
-                      ]));
-                  // Lanjutkan dengan logika Anda di sini
-                } else {
-                  // Jika token tidak ada, mungkin pengguna belum login
-                  // Anda dapat menangani ini dengan cara yang sesuai
+                    title: Text('Token'),
+                    content: Text(token),
+                    actions: [
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          Get.back();
+                        },
+                      ),
+                    ],
+                  ));
                 }
               },
             ),
@@ -214,32 +217,4 @@ class actionBar extends StatelessWidget {
       },
     );
   }
-}
-
-Widget buildCard(IconData icon, String label, Function() onTap) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Card(
-      elevation: 5,
-      child: Container(
-        width: 200,
-        height: 200,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: 50,
-            ),
-            SizedBox(height: 8),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontFamily: 'roboto'),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-
 import '../../config.dart';
 import '../../presentation/screens.dart';
 import 'bindings/controllers/controllers_bindings.dart';
@@ -42,5 +41,16 @@ class Nav {
       page: () => DataPendaftarScreen(),
       binding: DataPendaftarControllerBinding(),
     ),
+    GetPage(
+      name: Routes.TAGIHAN,
+      page: () => TagihanScreen(),
+      binding: TagihanControllerBinding(),
+    ),
+    GetPage(
+      name: Routes.SANTRI,
+      page: () => SantriScreen(),
+      binding: SantriControllerBinding(),
+    ),
+ 
   ];
 }
