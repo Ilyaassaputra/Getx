@@ -13,6 +13,7 @@ dependencies:
   flutter: 
     sdk: flutter
   shared_preferences: ^2.2.3
+  image_picker: ^0.8.4+1
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
